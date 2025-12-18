@@ -34,6 +34,95 @@
                 radial-gradient(circle at 10% 20%, rgba(42, 70, 70, 0.3) 0%, transparent 20%),
                 radial-gradient(circle at 90% 80%, rgba(42, 70, 70, 0.3) 0%, transparent 20%);
             min-height: 100vh;
+            transition: filter 0.3s ease;
+        }
+        
+        /* Jump Scare Overlay */
+        #jumpscare-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        #jumpscare-image {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            display: none;
+        }
+        
+        /* Shake animation for jump scare */
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+        
+        .shake {
+            animation: shake 0.5s;
+            animation-iteration-count: infinite;
+        }
+        
+        /* Screen flash effect */
+        @keyframes flash {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            20% { opacity: 0; }
+            30% { opacity: 1; }
+            40% { opacity: 0; }
+            50% { opacity: 1; }
+            60% { opacity: 0; }
+            70% { opacity: 1; }
+            80% { opacity: 0; }
+            90% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        
+        .flash {
+            animation: flash 0.3s;
+        }
+        
+        /* Warning indicator for jump scares */
+        #jumpscare-warning {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: rgba(196, 44, 44, 0.9);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            z-index: 100;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            max-width: 300px;
+        }
+        
+        #jumpscare-warning i {
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
         
         .container {
@@ -450,6 +539,16 @@
     </style>
 </head>
 <body>
+    <!-- Jump Scare System -->
+    <div id="jumpscare-overlay">
+        <img id="jumpscare-image" alt="Jump Scare">
+    </div>
+    
+    <div id="jumpscare-warning">
+        <i class="fas fa-exclamation-triangle"></i>
+        WARNING: This site contains unexpected jump scares
+    </div>
+    
     <!-- Header -->
     <header>
         <div class="container header-content">
@@ -566,7 +665,7 @@
                 <div class="timeline-item right">
                     <div class="timeline-content">
                         <h3>Patient Zero: Niam Nagulia</h3>
-                        <p>Niam Nagulia was the first confirmed infection, giving the virus its name. He was infected after playing Polytrack for over 12 hours, triggering the viral activation.</p>
+                        <p>Niam Nangulia was the first confirmed infection, giving the virus its name. He was infected after playing Polytrack for over 12 hours, triggering the viral activation.</p>
                     </div>
                 </div>
                 
@@ -682,11 +781,173 @@
             <div class="copyright">
                 <p>© 2031 NIAMVIRUS Emergency Response Network. All information is critical for survival. Updated daily.</p>
                 <p style="margin-top: 10px; font-size: 0.8rem;">This is a fictional emergency preparedness website created for demonstration purposes.</p>
+                <p style="margin-top: 10px; font-size: 0.8rem; color: var(--accent-yellow);">
+                    <i class="fas fa-exclamation-triangle"></i> This site contains unexpected jump scares - click anywhere to trigger
+                </p>
             </div>
         </div>
     </footer>
 
     <script>
+        // Jump Scare System
+        const jumpScareImages = [
+            'https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1531259683007-016a7b628fc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w-800&q=80',
+            'https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1518834103326-6d3eea1b7ab8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+        ];
+        
+        // Fallback images in case Unsplash URLs don't load
+        const fallbackImages = [
+            'troll1.jpg',
+            'troll2.jpg',
+            'troll3.jpg',
+            'troll4.jpg',
+            'troll5.jpg'
+        ];
+        
+        let currentImages = jumpScareImages;
+        let jumpScareActive = false;
+        let jumpScareTimer;
+        let clickTriggered = false;
+        
+        const jumpScareOverlay = document.getElementById('jumpscare-overlay');
+        const jumpScareImage = document.getElementById('jumpscare-image');
+        const jumpScareWarning = document.getElementById('jumpscare-warning');
+        const body = document.body;
+        
+        // Show warning on page load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                jumpScareWarning.style.display = 'block';
+                setTimeout(() => {
+                    jumpScareWarning.style.display = 'none';
+                }, 5000);
+            }, 2000);
+        });
+        
+        // Function to trigger jump scare
+        function triggerJumpScare() {
+            if (jumpScareActive) return;
+            
+            jumpScareActive = true;
+            
+            // Select random image
+            const randomIndex = Math.floor(Math.random() * currentImages.length);
+            const selectedImage = currentImages[randomIndex];
+            
+            // Set image source
+            jumpScareImage.src = selectedImage;
+            
+            // Show overlay and image
+            jumpScareOverlay.style.display = 'flex';
+            setTimeout(() => {
+                jumpScareImage.style.display = 'block';
+                jumpScareImage.classList.add('shake');
+                
+                // Play scary sound (if available)
+                playScarySound();
+                
+                // Flash screen effect
+                body.classList.add('flash');
+                
+                // Hide after 2 seconds
+                setTimeout(() => {
+                    jumpScareImage.style.display = 'none';
+                    jumpScareOverlay.style.display = 'none';
+                    jumpScareImage.classList.remove('shake');
+                    body.classList.remove('flash');
+                    
+                    // Reset after a short delay
+                    setTimeout(() => {
+                        jumpScareActive = false;
+                    }, 500);
+                }, 2000);
+            }, 50);
+        }
+        
+        // Function to play scary sound
+        function playScarySound() {
+            try {
+                // Create audio context for sound
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(200, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(800, audioContext.currentTime + 0.3);
+                
+                gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.5);
+            } catch (e) {
+                console.log("Audio context not supported");
+            }
+        }
+        
+        // Click event to trigger jump scare
+        document.addEventListener('click', function(e) {
+            // Don't trigger on jumpscare overlay (to allow closing it)
+            if (e.target.id === 'jumpscare-overlay' || e.target.id === 'jumpscare-image') {
+                // Close jump scare if clicked
+                jumpScareImage.style.display = 'none';
+                jumpScareOverlay.style.display = 'none';
+                jumpScareImage.classList.remove('shake');
+                body.classList.remove('flash');
+                jumpScareActive = false;
+                return;
+            }
+            
+            // Don't trigger on navigation links
+            if (e.target.tagName === 'A' && e.target.getAttribute('href').startsWith('#')) {
+                return;
+            }
+            
+            // Set flag that user triggered a click scare
+            clickTriggered = true;
+            
+            // Trigger jump scare with 70% probability on click
+            if (Math.random() < 0.7) {
+                triggerJumpScare();
+            }
+        });
+        
+        // Automatic jump scare every 5 seconds
+        function startJumpScareTimer() {
+            jumpScareTimer = setInterval(() => {
+                // Only trigger automatic scares if user hasn't recently triggered one by click
+                if (!clickTriggered && !jumpScareActive && Math.random() < 0.8) {
+                    triggerJumpScare();
+                }
+                clickTriggered = false; // Reset click flag
+            }, 5000); // 5 seconds
+        }
+        
+        // Start the timer
+        startJumpScareTimer();
+        
+        // Function to use fallback images if needed
+        function checkImages() {
+            // Simple check - if images fail to load, switch to fallback
+            setTimeout(() => {
+                const testImg = new Image();
+                testImg.onerror = () => {
+                    currentImages = fallbackImages;
+                    console.log("Using fallback images");
+                };
+                testImg.src = currentImages[0];
+            }, 1000);
+        }
+        
+        // Check images on load
+        window.addEventListener('load', checkImages);
+        
         // Smooth scrolling for navigation links
         document.querySelectorAll('nav a').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
