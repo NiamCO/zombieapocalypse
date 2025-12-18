@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIAMVIRUS Emergency Preparedness - Survive the Apocalypse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-dark: #0a0f0d;
+            --secondary-dark: #1a2a2a;
+            --accent-red: #c42c2c;
+            --accent-green: #2d8a2d;
+            --accent-yellow: #d4af37;
+            --text-light: #f0f0f0;
+            --text-gray: #b0b0b0;
+            --card-bg: rgba(26, 42, 42, 0.8);
+            --danger-zone: rgba(196, 44, 44, 0.1);
+        }
+        
+        body {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(42, 70, 70, 0.3) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(42, 70, 70, 0.3) 0%, transparent 20%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: rgba(10, 15, 13, 0.95);
+            padding: 20px 0;
+            border-bottom: 2px solid var(--accent-red);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            color: var(--accent-red);
+            font-size: 2.5rem;
+        }
+        
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .logo-text span {
+            color: var(--accent-red);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 3px;
+        }
+        
+        nav a:hover, nav a.active {
+            color: var(--accent-yellow);
+            background-color: rgba(196, 44, 44, 0.1);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background-image: linear-gradient(rgba(10, 15, 13, 0.9), rgba(10, 15, 13, 0.7)), url('https://images.unsplash.com/photo-1531259683007-016a7b628fc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 60px;
+            border-bottom: 2px solid var(--accent-red);
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--text-light);
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+        }
+        
+        .hero h1 span {
+            color: var(--accent-red);
+        }
+        
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            color: var(--text-gray);
+        }
+        
+        .warning-badge {
+            display: inline-block;
+            background-color: var(--danger-zone);
+            color: var(--accent-yellow);
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 700;
+            border: 1px solid var(--accent-yellow);
+            margin-top: 20px;
+            font-size: 1.2rem;
+        }
+        
+        /* Main Content */
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+            color: var(--accent-yellow);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 3px;
+            background-color: var(--accent-red);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .content-section {
+            padding: 60px 0;
+        }
+        
+        /* Emergency Kit Section */
+        .kit-section {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .kit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .kit-item {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 5px solid var(--accent-green);
+        }
+        
+        .kit-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+        
+        .kit-item.danger {
+            border-left-color: var(--accent-red);
+        }
+        
+        .kit-item.warning {
+            border-left-color: var(--accent-yellow);
+        }
+        
+        .kit-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--accent-green);
+        }
+        
+        .kit-item.danger .kit-icon {
+            color: var(--accent-red);
+        }
+        
+        .kit-item.warning .kit-icon {
+            color: var(--accent-yellow);
+        }
+        
+        .kit-item h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+        
+        .kit-item p {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+        }
+        
+        /* Virus Info */
+        .info-timeline {
+            max-width: 900px;
+            margin: 50px auto;
+            position: relative;
+        }
+        
+        .info-timeline:before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background-color: var(--accent-red);
+        }
+        
+        .timeline-item {
+            margin-bottom: 50px;
+            position: relative;
+            width: 45%;
+        }
+        
+        .timeline-item.left {
+            margin-right: auto;
+        }
+        
+        .timeline-item.right {
+            margin-left: auto;
+        }
+        
+        .timeline-content {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .timeline-content h3 {
+            color: var(--accent-yellow);
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .timeline-year {
+            position: absolute;
+            top: 0;
+            width: 120px;
+            height: 40px;
+            background-color: var(--accent-red);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border-radius: 5px;
+            z-index: 1;
+        }
+        
+        .timeline-item.left .timeline-year {
+            right: -140px;
+        }
+        
+        .timeline-item.right .timeline-year {
+            left: -140px;
+        }
+        
+        /* Virus Spread Section */
+        .spread-steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .step {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+            width: 250px;
+            text-align: center;
+            position: relative;
+            border-top: 5px solid var(--accent-red);
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-red);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .step h4 {
+            margin: 20px 0 15px;
+            font-size: 1.4rem;
+            color: var(--accent-yellow);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--secondary-dark);
+            padding: 50px 0 20px;
+            margin-top: 60px;
+            border-top: 2px solid var(--accent-red);
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-section h3 {
+            color: var(--accent-yellow);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .footer-section p {
+            color: var(--text-gray);
+            margin-bottom: 15px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+        
+        .emergency-contact {
+            color: var(--accent-red);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .timeline-item {
+                width: 90%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .timeline-item.left .timeline-year,
+            .timeline-item.right .timeline-year {
+                position: relative;
+                left: 0;
+                right: 0;
+                margin: 0 auto 20px;
+            }
+            
+            .info-timeline:before {
+                left: 30px;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .kit-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .kit-section, .step, .timeline-content {
+                padding: 20px;
+            }
+            
+            .hero {
+                padding: 50px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-biohazard logo-icon"></i>
+                <div class="logo-text">NIAM<span>VIRUS</span> ALERT</div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#emergency-kit">Emergency Kit</a></li>
+                    <li><a href="#origin">Virus Origin</a></li>
+                    <li><a href="#spread">How It Spreads</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>SURVIVE THE <span>NIAMVIRUS</span> APOCALYPSE</h1>
+            <p>The NIAMVIRUS outbreak has changed the world. Knowing how to protect yourself and having the right emergency supplies can mean the difference between life and death.</p>
+            <div class="warning-badge">
+                <i class="fas fa-exclamation-triangle"></i> CRITICAL ALERT: INFECTION RATE AT 67%
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Kit Section -->
+    <section class="content-section" id="emergency-kit">
+        <div class="container">
+            <h2 class="section-title">EMERGENCY SURVIVAL KIT</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 40px; font-size: 1.2rem; color: var(--text-gray);">
+                Your emergency kit is your first line of defense against the NIAMVIRUS. Ensure you have all these items prepared and accessible at all times.
+            </p>
+            
+            <div class="kit-section">
+                <div class="kit-grid">
+                    <!-- Kit Item 1 -->
+                    <div class="kit-item danger">
+                        <div class="kit-icon">
+                            <i class="fas fa-hands"></i>
+                        </div>
+                        <h3>Protective Gloves & Mask</h3>
+                        <p>Gloves and a mask can prevent the mucus from touching you. Use thick, durable materials that the virus cannot penetrate. Replace after each potential exposure.</p>
+                    </div>
+                    
+                    <!-- Kit Item 2 -->
+                    <div class="kit-item">
+                        <div class="kit-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <h3>Food & Water Supply</h3>
+                        <p>Store at least 2 weeks of non-perishable food and 1 gallon of water per person per day. Include high-energy foods and water purification tablets.</p>
+                    </div>
+                    
+                    <!-- Kit Item 3 -->
+                    <div class="kit-item warning">
+                        <div class="kit-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Non-Lethal Weapon</h3>
+                        <p>A weapon for defense, with non-lethal options preferred in case a cure is created. Consider tasers, pepper spray, or blunt objects to immobilize without killing.</p>
+                    </div>
+                    
+                    <!-- Kit Item 4 -->
+                    <div class="kit-item">
+                        <div class="kit-icon">
+                            <i class="fas fa-first-aid"></i>
+                        </div>
+                        <h3>First-Aid & Medicine</h3>
+                        <p>Comprehensive first-aid kit including bandages, antiseptics, pain relievers, and any personal prescription medications. Include antiviral supplies if available.</p>
+                    </div>
+                    
+                    <!-- Kit Item 5 -->
+                    <div class="kit-item danger">
+                        <div class="kit-icon">
+                            <i class="fas fa-vest"></i>
+                        </div>
+                        <h3>Insulated Protective Jacket</h3>
+                        <p>A thick, insulated jacket to completely eliminate any chance of the virus entering the body through skin contact. Should be waterproof and tear-resistant.</p>
+                    </div>
+                    
+                    <!-- Kit Item 6 -->
+                    <div class="kit-item">
+                        <div class="kit-icon">
+                            <i class="fas fa-mountain"></i>
+                        </div>
+                        <h3>Shelter on High Ground</h3>
+                        <p>Secure shelter on high ground or with strong walls. The infected have difficulty with elevation and fortified positions provide critical safety during outbreaks.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Virus Origin -->
+    <section class="content-section" id="origin" style="background-color: rgba(0, 0, 0, 0.2);">
+        <div class="container">
+            <h2 class="section-title">VIRUS ORIGIN & TIMELINE</h2>
+            
+            <div class="info-timeline">
+                <!-- Timeline Item 1 -->
+                <div class="timeline-item left">
+                    <div class="timeline-year">1967</div>
+                    <div class="timeline-content">
+                        <h3>Origin of NIAMVIRUS</h3>
+                        <p>The virus first originated in 1967 but wasn't discovered until 2030 due to its dormant nature and slow initial spread.</p>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 2 -->
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>Patient Zero: Niam Nangulia</h3>
+                        <p>Niam Nangulia was the first confirmed infection, giving the virus its name. He was infected after playing Polytrack for over 12 hours, triggering the viral activation.</p>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 3 -->
+                <div class="timeline-item left">
+                    <div class="timeline-year">2030</div>
+                    <div class="timeline-content">
+                        <h3>Discovery & Global Spread</h3>
+                        <p>The virus was discovered in 2030 when infection rates skyrocketed globally. By this time, containment was nearly impossible due to worldwide gaming culture.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="max-width: 800px; margin: 50px auto 0; background-color: var(--danger-zone); padding: 25px; border-radius: 10px; border-left: 5px solid var(--accent-red);">
+                <h3 style="color: var(--accent-yellow); margin-bottom: 15px; font-size: 1.5rem;">
+                    <i class="fas fa-exclamation-circle"></i> How Infection Occurs
+                </h3>
+                <p>People contract NIAMVIRUS by playing video games for over 12 hours continuously, or through direct contact with infected individuals. The virus attacks the brain, destroying neurons until it takes control of cognitive functions.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Virus Spread -->
+    <section class="content-section" id="spread">
+        <div class="container">
+            <h2 class="section-title">HOW THE VIRUS SPREADS</h2>
+            
+            <div class="spread-steps">
+                <!-- Step 1 -->
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h4>Mucus Production</h4>
+                    <p>Infected hosts produce excessive mucus that spreads onto their hands and face.</p>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h4>Aggressive Behavior</h4>
+                    <p>Hosts experience uncanny aggression toward others, increasing contact risk.</p>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h4>Contact Transmission</h4>
+                    <p>Mucus spreads through touch. Victims have 30 seconds to remove it before skin penetration.</p>
+                </div>
+                
+                <!-- Step 4 -->
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h4>Rapid Multiplication</h4>
+                    <p>The virus multiplies rapidly after penetrating skin, reaching the brain in 6-7 minutes.</p>
+                </div>
+                
+                <!-- Step 5 -->
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <h4>Brain Takeover</h4>
+                    <p>Virus destroys half the brain, then takes control of the remaining half for its purposes.</p>
+                </div>
+            </div>
+            
+            <div style="max-width: 900px; margin: 60px auto 0; padding: 30px; background-color: var(--card-bg); border-radius: 10px;">
+                <h3 style="color: var(--accent-yellow); margin-bottom: 20px; text-align: center; font-size: 1.8rem;">
+                    <i class="fas fa-brain"></i> How NIAMVIRUS Affects the Body
+                </h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <div>
+                        <h4 style="color: var(--accent-green); margin-bottom: 10px;">1. Immune Response</h4>
+                        <p>Pathogens from infected mucus bypass barriers, triggering immune response. Macrophages engulf pathogens while T-cells signal B-cells to respond.</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--accent-green); margin-bottom: 10px;">2. Cellular Warfare</h4>
+                        <p>B-cells and T-cells multiply to fight the invasion. Some become memory cells that don't respond to the first invasion, leaving the body vulnerable.</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--accent-green); margin-bottom: 10px;">3. Neural Destruction</h4>
+                        <p>The virus travels to the brain, tricking brain cells into destroying themselves. This neural degradation happens rapidly once the blood-brain barrier is crossed.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>NIAMVIRUS ALERT</h3>
+                    <p>Official information portal for NIAMVIRUS preparedness and survival guidelines. Stay informed to stay alive.</p>
+                    <p class="emergency-contact">EMERGENCY HOTLINE: 1-800-NIAM-VRS</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Critical Reminders</h3>
+                    <p><i class="fas fa-skull-crossbones" style="color: var(--accent-red); margin-right: 10px;"></i> Avoid gaming marathons (>12 hours)</p>
+                    <p><i class="fas fa-people-arrows" style="color: var(--accent-yellow); margin-right: 10px;"></i> Maintain social distance from infected</p>
+                    <p><i class="fas fa-hand-paper" style="color: var(--accent-green); margin-right: 10px;"></i> Always wear protective gear outdoors</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Survival Priority Checklist</h3>
+                    <p>✓ Secure shelter on high ground</p>
+                    <p>✓ Stockpile 2+ weeks of supplies</p>
+                    <p>✓ Prepare decontamination kit</p>
+                    <p>✓ Establish communication plan</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2031 NIAMVIRUS Emergency Response Network. All information is critical for survival. Updated daily.</p>
+                <p style="margin-top: 10px; font-size: 0.8rem;">This is a fictional emergency preparedness website created for demonstration purposes.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+                
+                // Update active nav link
+                document.querySelectorAll('nav a').forEach(link => {
+                    link.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+        
+        // Highlight current section in navigation
+        window.addEventListener('scroll', function() {
+            let current = '';
+            const sections = document.querySelectorAll('.content-section, .hero');
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Add visual effect to kit items on hover
+        document.querySelectorAll('.kit-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+        
+        // Emergency alert simulation
+        function showEmergencyAlert() {
+            const alertDiv = document.createElement('div');
+            alertDiv.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background-color: var(--accent-red);
+                color: white;
+                padding: 15px 20px;
+                border-radius: 5px;
+                z-index: 1000;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+                max-width: 300px;
+                animation: slideIn 0.5s ease;
+            `;
+            
+            alertDiv.innerHTML = `
+                <strong><i class="fas fa-bell"></i> ALERT:</strong> 
+                <p style="margin-top: 5px;">New infection reported within 50km. Secure your shelter.</p>
+                <button onclick="this.parentElement.remove()" style="background: transparent; border: none; color: white; float: right; cursor: pointer;">X</button>
+            `;
+            
+            document.body.appendChild(alertDiv);
+            
+            // Auto-remove after 10 seconds
+            setTimeout(() => {
+                if (alertDiv.parentElement) {
+                    alertDiv.style.animation = 'slideOut 0.5s ease';
+                    setTimeout(() => alertDiv.remove(), 500);
+                }
+            }, 10000);
+        }
+        
+        // Show alert after page loads
+        window.addEventListener('load', function() {
+            setTimeout(showEmergencyAlert, 3000);
+        });
+        
+        // Add CSS for animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
